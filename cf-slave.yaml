@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  InstanceTypeParameter:
+    Type: String
+    Default: t2.small
+    Description: Enter instance size. Default is t3a.medium.
+  AMI:
+    Type: String
+    Default: 
+    Description: The Ubuntu AMI to use.
+  Key:
+    Type: String
+    Default: docker-host
+    Description: Enter key name
+  VPC:
+    Type: String
+    Default: VPCID
+    Description: Default VPC ID.
+  Subnet:
+    Type: String
+    Default: SUBNETID
+    Description: Subnet ID.
+  SecurityGroupName:
+    Type: String
+    Default: SecurityGroupName
+    Description: Name for security group.
+
+Resources:
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Ref SecurityGroupName
+      GroupDescription: "Security Group for jenkins slave"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp:  18.206.107.24/29
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      InstanceId: !Ref slave
+  slave:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType:
+        Ref: InstanceTypeParameter
+      KeyName: !Ref Key
+      SubnetId: !Ref Subnet
+      SecurityGroupIds:
+        - Ref: InstanceSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          sudo apt-get update -y
+          sudo apt-get install openjdk-17-jdk -y
+          sudo apt-get install maven -y
+          sudo apt update -y
+          sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          sudo apt-get update -y
+          sudo apt-get install docker-ce -y
+          sudo usermod -aG docker ubuntu
+      Tags:
+        - Key: Name
+          Value: DockerHost
+Outputs:
+  PublicIp:
+    Value:
+      Fn::GetAtt:
+        - slave
+        - PublicIp
+    Description: Server's PublicIp Address
