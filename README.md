@@ -34,14 +34,14 @@ CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
                 username VARCHAR(50) UNIQUE NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL
-            )
+            );
 
 # List of all tables
 \dt
 
 # Insert a record in users table
 INSERT INTO users (id , username, email ) 
-            VALUES (1,    'vcjain', 'vcjain@self.com')
+            VALUES (1,    'vcjain', 'vcjain@self.com');
 
 ```
 
@@ -107,4 +107,17 @@ Modify the index.html file content at /home/ubuntu/data using nano command and b
 Similarly, we can get logs of nginx on host machine
 ```
 docker run -p 8080:80 -d --name web -v /home/ubuntu/data:/usr/share/nginx/html -v /home/ubuntu/data:/var/log/nginx nginx
+```
+
+Descriptive way of adding a volume or mounting a directory
+
+```
+The option --mount help to add volume in descriptive. Here type can be bind or volume.
+
+docker run -p 8080:80 -d --name web --mount type=bind,source=/home/ubuntu/data,destination=/var/log/nginx nginx
+
+# Note: please ensure source, bind, and destination do not have space
+
+docker run -p 5432:5432 -d --name db -e POSTGRES_PASSWORD=password --mount type=volume,source=postgre-data,destination=/var/lib/postgresql/data postgres
+
 ```
