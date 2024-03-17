@@ -13,7 +13,7 @@ docker volume ls
 docker volume inspect <vol-name>
 ```
 
-Create a container with a volume
+## Create a container with a volume using -v option
 ```
 # Creating a PostgresSql database with volume
 
@@ -63,4 +63,48 @@ Select the records in the database
 SELECT * FROM users;
 ```
 
+Clean resources
+```
+docker rm -f db
+docker volume rm postgre-data
+```
 
+## Create a container with a volume using bind option
+
+```
+# Create a data directory to bind with container
+
+mkdir /home/ubuntu/data
+cd /home/ubuntu/data
+nano index.html
+```
+Copy below content to the nano editor
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to My Website</title>
+</head>
+<body>
+    <h1>Hello, world!</h1>
+    <p>This is my custom index page.</p>
+</body>
+</html>
+```
+
+Run a nginx container and bind the html directory
+```
+docker run -p 8080:80 -d --name web -v /home/ubuntu/data:/usr/share/nginx/html nginx
+```
+
+Browsre the nginx page
+```
+curl localhost:8080
+```
+
+Modify the index.html file content at /home/ubuntu/data using nano command and browse the nginx page, you will see the new changes
+
+Similarly, we can get logs of nginx on host machine
+```
+docker run -p 8080:80 -d --name web -v /home/ubuntu/data:/usr/share/nginx/html -v /home/ubuntu/data:/var/log/nginx nginx
+```
