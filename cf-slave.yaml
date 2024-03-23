@@ -6,7 +6,7 @@ Parameters:
     Description: Enter instance size. Default is t3a.medium.
   AMI:
     Type: String
-    Default: 
+    Default: ami-080e1f13689e07408
     Description: The Ubuntu AMI to use.
   Key:
     Type: String
