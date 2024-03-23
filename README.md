@@ -121,3 +121,61 @@ docker run -p 8080:80 -d --name web --mount type=bind,source=/home/ubuntu/data,d
 docker run -p 5432:5432 -d --name db -e POSTGRES_PASSWORD=password --mount type=volume,source=postgre-data,destination=/var/lib/postgresql/data postgres
 
 ```
+
+## Backup and Restore
+
+There is no straight forward way to backup a volume and restore it. We will need to backup a volume directory manually and will need to restore it as well it manually. 
+
+There can be manu usecases for backing up and volume like taking  replicating data across multiple environments.
+
+Lets run a postgres container with a volume, create a table and records. 
+
+We will then run a backup container, which will create a backup tar file and will run a restore conatiner to restore the volume from the tar file. 
+
+As we will restore the volume on the same machine, we will delete the db container and volume after taking backup. To test restoration, we will create db container again after restoration and will see if we have earlier table data available.
+
+Run a postgres and pgadmin container
+```
+docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgres
+
+docker run -p 5080:80  -e 'PGADMIN_DEFAULT_EMAIL=vcjain@self.com'  -e 'PGADMIN_DEFAULT_PASSWORD=admin' -d --name pg dpage/pgadmin4:latest
+
+# Access pgadmin at http://localhost:5080 and login with email and password provided in above command.
+```
+
+Run a docker inspect command to fetch IP address of postgres and connect a server using postgres server private IP address
+```
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db
+
+# Connect to database in pgadmin and Create a new table Users
+CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username VARCHAR(50) UNIQUE NOT NULL,
+                email VARCHAR(100) UNIQUE NOT NULL
+            );
+
+# List of all tables
+\dt
+
+# Insert a record in users table
+INSERT INTO users (id , username, email ) 
+            VALUES (1,    'vcjain', 'vcjain@self.com');
+```
+
+Run a container to backup a volume
+```
+docker run --rm -v postgre-data:/volume -v /Users/vikashjain/temp/data:/backup alpine tar -czf /backup/postgres_data_backup.tar -C /volume .
+```
+
+Delete existing volume
+```
+docker volume ls
+docker volume rm  postgre-data
+````
+
+Restore volume
+```
+docker run --rm -v postgre-data:/volume -v  /Users/vikashjain/temp/data:/backup alpine tar -xzf /backup/postgres_data_backup.tar -C /volume
+```
+
+Create postgre container again and check if we have existing table and record.
