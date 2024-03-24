@@ -1,0 +1,6 @@
+networks:
+  mynet:
+    driver: bridge
+
+volumes:
+  postgre-data:

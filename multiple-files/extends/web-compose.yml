@@ -1,0 +1,28 @@
+services:
+  app:
+    image: vcjain/docker-link-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mynet
+    container_name: web
+
+  db:
+    extends:
+      file: db-compose.yml
+      service: db
+  
+  pgadmin:
+    extends:
+      file: db-compose.yml
+      service: pgadmin
+
+networks:
+  mynet:
+    driver: bridge
+
+volumes:
+  postgre-data:
+

@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    depends_on:
+      - pgadmin
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgre-data:/var/lib/postgresql/data
+    networks:
+      - mynet
+    container_name: db
+  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=vcjain@self.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    networks:
+      - mynet
+    container_name: pg
+
