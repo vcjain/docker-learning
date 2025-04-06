@@ -12,9 +12,9 @@ RUN mvn clean package
 
 # Final Stage - It will only include jar file and src code will not be included
 
-#FROM openjdk:17-slim
-#WORKDIR /app
-#COPY --from=builder /app/target/demo-1.0.jar .
+FROM openjdk:17-slim
+WORKDIR /app
+COPY --from=builder /app/target/demo-1.0.jar .
 
 EXPOSE 8080
 
