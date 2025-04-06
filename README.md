@@ -47,8 +47,9 @@ Let get into the database container and create tables and insert some data.
 
 ```
 docker exec -it db /bin/bash
-
-# connect with postgressql database
+```
+Connect with postgressql database
+```
 psql -U postgres -d postgres
 ```
 ```
@@ -89,6 +90,8 @@ SELECT * FROM users;
 Clean resources
 ```
 docker rm -f db
+```
+```
 docker volume rm postgre-data
 ```
 <br><br>
