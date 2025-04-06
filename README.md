@@ -4,23 +4,29 @@ The docker volumes are used to persist the aplication data. It is preferred way 
 
 Create and remove a volume 
 ```
-docker volume create postgre-data
-docker volume rm postgre-data
+docker volume create volume1
+```
+```
+docker volume rm volume1
 ```
 List down all volumes and inspect volume
 ```
 docker volume ls
+```
+```
 docker volume inspect <vol-name>
 ```
 
 ## Create a container with a volume using -v option
 ```
-# Creating a PostgresSql database with volume
-
+docker volume create postgre-data
+```
+### Creating a PostgresSql database with volume
+```
 docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgres:16-alpine
 ```
 
-## Expose a volume directory in image
+### Expose a volume directory in image
 
 To expose the the volume directory in the image, we need to specify Volume instruction in the dockerfile. Below is an example of exposing the Volume in dockerfile. When a user creates a container from below image then he can specify the volume path of container in -v option 
 ```
