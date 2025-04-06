@@ -18,7 +18,7 @@ To create an image, we need to exeucte docker build command and need to provide 
 
 3.  After image is created, we can run container using image.
     ```
-    docker run --name python-app -p 8000:8000 python-app:latest
+    docker run -d --name python-app -p 8000:8000 python-app:latest
     ```
 
 
