@@ -81,6 +81,33 @@ docker network diconnect my-net1 web
 
 docker inspect web
 ```
+
+### Demonstrate on how 2 container can communicate with container name
+
+```
+docker run --it --rm --name web --network my-net -p 8000:80 nginx
+```
+```
+docker run --it --rm --name os --network my-net  ubuntu /bin/bash
+```
+
+### Fix: Install `ping` in Ubuntu Container
+
+To ping `web` from inside your `os` container:
+
+**Update and install ping (via iputils-ping):**
+
+```bash
+apt update
+apt install iputils-ping -y
+```
+**Ping the nginx container by its name (if using Docker Compose or if you know the name):**
+
+```bash
+ping web
+```
+
+
 ## Host Network
 In Host network, the docker will not create a isolated network, instead will use Host machine network itself. The container's created in the network will have ip address of host only.
 
