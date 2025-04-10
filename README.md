@@ -32,5 +32,34 @@ sudo docker-compose up -d
 
 sudo docker ps
 ```
+Let get into the database container and create tables and insert some data, if you are using fresh volume which doesn't have any tables.
 
+```
+docker exec -it db /bin/bash
+```
+Connect with postgressql database
+```
+psql -U postgres -d postgres
+```
+```
+# Create a new table Users
+CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username VARCHAR(50) UNIQUE NOT NULL,
+                email VARCHAR(100) UNIQUE NOT NULL
+            );
+
+# List of all tables
+\dt
+
+# Insert a record in users table
+INSERT INTO users (id , username, email ) 
+            VALUES (1,    'vcjain', 'vcjain@self.com');
+
+```
+
+Select the records in the database
+```
+select * from users;
+```
 
