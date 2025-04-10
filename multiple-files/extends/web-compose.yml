@@ -25,4 +25,5 @@ networks:
 
 volumes:
   postgre-data:
+    name: postgre-data
 
