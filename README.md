@@ -62,4 +62,4 @@ Select the records in the database
 ```
 select * from users;
 ```
-
+Open web browser and type http://localhost:8000/get
