@@ -50,10 +50,7 @@ Run the `docker swarm join` command on Node 2 (the worker).
 ### Step 3: Create an Overlay Network on Manager
 
 ```bash
-docker network create \
-  --driver overlay \
-  --attachable \
-  demo-overlay
+docker network create --driver overlay --attachable demo-overlay
 ```
 
 > `--attachable` allows standalone containers (not just services) to attach
@@ -62,11 +59,7 @@ docker network create \
 ### Step 4: Run Nginx Service on the Overlay Network
 
 ```bash
-docker service create \
-  --name nginx-demo \
-  --network demo-overlay \
-  --publish 80:80 \
-  nginx
+docker service create --name web --network demo-overlay --publish 80:80 nginx
 ```
 
 Swarm will schedule it on one of the nodes.
@@ -78,16 +71,14 @@ Swarm will schedule it on one of the nodes.
 On **Node 2** (or any node), run:
 
 ```bash
-docker run -it --rm \
-  --network demo-overlay \
-  ubuntu bash
+docker run -it --rm --network demo-overlay --name os ubuntu bash
 ```
 
 Inside the container:
 
 ```
 apt update && apt install -y curl
-curl nginx-demo
+curl web
 ```
 
 You’ll see the default Nginx welcome page — the request went **through the overlay network**.
