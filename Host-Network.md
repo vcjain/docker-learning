@@ -38,15 +38,15 @@ ss -tuln | grep 5432
 ### 2. Run Ubuntu Container with `--network host`
 
 ```bash
-docker run -it --rm \
-  --network host \
-  ubuntu bash
+docker run -it --rm --network host ubuntu bash
 ```
 
 Then inside the container:
 
 ```bash
 apt update && apt install -y postgresql-client
+```
+```
 psql -h 127.0.0.1 -U myuser -d mydb
 ```
 
