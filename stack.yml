@@ -1,0 +1,32 @@
+services:
+  app:
+    image: vcjain/docker-link-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    container_name: web
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    depends_on:
+      - pgadmin
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgre-data:/var/lib/postgresql/data
+    container_name: db
+  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=vcjain@self.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    container_name: pg
+
+volumes:
+  postgre-data:
+    name: postgre-data
