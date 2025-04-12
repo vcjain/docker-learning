@@ -30,3 +30,6 @@ services:
 volumes:
   postgre-data:
     name: postgre-data
+networks:
+  mynet:
+    driver: overlay
