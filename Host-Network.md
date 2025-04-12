@@ -88,6 +88,15 @@ sudo systemctl stop postgresql
 
 ## Notes
 
-- **This is only recommended for trusted containers** due to reduced network isolation.
-- Useful for performance testing or when the container needs to bind to privileged ports (like 80/443).
+- When you run a Docker container with --network host, you're using the host network namespace, which means:
+  
+  - The container shares the network stack with the host.
+  - Any networking tools (like ip, hostname, whoami, etc.) inside the container may reflect host values, not isolated container values.
+  - en you run bash inside the container, the prompt might show the host's IP or hostname, making it look like you’re on the host — even though you're actually still inside the container.
+
+- When you run a container in default network then you will see the prompt as root@<conatiner ID>. This is so because by default conatiner ID is set as hostname of the container.
+- You can check IP address of container using ```docker inspect <container-name>``` command. Or by command ```hostname -I``` inside the conatiner.
+- You can check promot to use host name by running below command
+  - ```export PS1="\u@\$(hostname -I | awk '{print $1}'):~# "```
+
 
