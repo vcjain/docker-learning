@@ -85,10 +85,10 @@ docker inspect web
 ### Demonstrate on how 2 container can communicate with container name
 
 ```
-docker run --it --rm --name web --network my-net -p 8000:80 nginx
+docker run -it --rm --name web --network my-net -p 8000:80 nginx
 ```
 ```
-docker run --it --rm --name os --network my-net  ubuntu /bin/bash
+docker run -it --rm --name os --network my-net  ubuntu /bin/bash
 ```
 
 ### Fix: Install `ping` in Ubuntu Container
