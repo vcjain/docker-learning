@@ -87,7 +87,7 @@ You’ll see the default Nginx welcome page — the request went **through the o
 ## Cleanup
 
 ```bash
-docker service rm nginx-demo
+docker service rm web
 docker network rm demo-overlay
 ```
 
