@@ -5,6 +5,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    networks:
+      - mynet
     container_name: web
   db:
     image: postgres:16-alpine
@@ -16,6 +18,8 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - postgre-data:/var/lib/postgresql/data
+    networks:
+      - mynet
     container_name: db
   
   pgadmin:
@@ -25,11 +29,14 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=vcjain@self.com
       - PGADMIN_DEFAULT_PASSWORD=admin
+    networks:
+      - mynet
     container_name: pg
 
 volumes:
   postgre-data:
     name: postgre-data
+
 networks:
   mynet:
     driver: overlay
