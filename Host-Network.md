@@ -16,7 +16,9 @@ Run a PostgreSQL database **on the host** and access it from a **Docker containe
 
 ```bash
 sudo apt update
-sudo apt install postgresql
+```
+```
+sudo apt install postgresql -y
 ```
 
 Set up your DB (optional):
