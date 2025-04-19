@@ -38,31 +38,10 @@ trivy --version
 
 
 
-### Option 1: Use Intentionally Vulnerable Image (recommended)
+### Use Intentionally Vulnerable Image
 ```bash
 docker pull vulnerables/web-dvwa
 docker tag vulnerables/web-dvwa my-vulnerable-app:latest
-```
-
-### Option 2: Create Your Own Vulnerable Dockerfile
-```Dockerfile
-# Dockerfile
-FROM python:3.6-slim
-
-RUN apt-get update && apt-get install -y \
-    openssl \
-    libssl1.0.0 \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY . /app
-WORKDIR /app
-
-CMD ["python3"]
-```
-
-Build the image:
-```bash
-docker build -t my-vulnerable-app .
 ```
 
 ---
