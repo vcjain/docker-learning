@@ -33,6 +33,6 @@ docker cp cont1:/zap/wrk/report.html /home/labuser/report.html
 ```
 Open the report.html in browser.
 
-<img width="1232" alt="image" src="https://github.com/user-attachments/assets/27a72de8-3564-4e27-9638-785f4e2ec137" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/27a72de8-3564-4e27-9638-785f4e2ec137" />
 
 
