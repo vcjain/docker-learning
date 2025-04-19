@@ -17,9 +17,9 @@ sudo snap install zaproxy
 
 ### Option 2: Download from Official Site
 ```bash
-wget https://github.com/zaproxy/zaproxy/releases/download/v2.14.0/ZAP_2.14.0_Linux.tar.gz
-tar -xvzf ZAP_2.14.0_Linux.tar.gz
-cd ZAP_2.14.0
+wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.1/ZAP_2.16.1_Linux.tar.gz
+tar -xvzf ZAP_2.16.1_Linux.tar.gz
+cd ZAP_2.16.0
 ```
 
 To launch the GUI:
