@@ -12,14 +12,19 @@ docker login
 Generate Keys used in docker content trust for signing images 
 ```
 docker trust key generate <signername>
+```
+Example
+```
 docker trust key generate vcjain
 ```
 
 Add signer user to repo
 ```
 docker trust signer add --key <signername>.pub <signer name> <repo>
+```
 
-Example 
+> Example 
+```
 docker trust signer add --key vcjain.pub vcjain vcjain/dct-test
 ```
 
