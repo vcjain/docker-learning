@@ -1,86 +1,38 @@
 # OWASP ZAP Demo: Web App Vulnerability Scan on Ubuntu
 
 This guide demonstrates how to:
-1. Install OWASP ZAP on Ubuntu
-2. Launch ZAP in headless mode
-3. Run a scan against a sample application
-4. Generate and view a report
+1. Launch ZAP in headless mode
+2. Run a scan against a sample application
+3. Generate and view a report
 
 ---
 
-## Step 1: Install OWASP ZAP on Ubuntu
+Run the following command to start the ZAP container
+```
+docker run -dt --name cont1 ghcr.io/zaproxy/zaproxy:stable /bin/bash
 
-### Option 1: Install via Snap (Recommended)
-```bash
-sudo snap install zaproxy
+```
+Run the following command to create ZAP workspace for scanning the vulnerabilities:
+```
+docker exec cont1 mkdir /zap/wrk
+
+```
+Run the following command to connect to the container:
+```
+docker exec -it cont1 sh
+
+```
+Run the following command to initiate scanning of the workspace:
+```
+zap-baseline.py -t https://medium.com/ -r report.html -I
 ```
 
-### Option 2: Download from Official Site
-```bash
-wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.1/ZAP_2.16.1_Linux.tar.gz
-tar -xvzf ZAP_2.16.1_Linux.tar.gz
-cd ZAP_2.16.0
+It will take couple of minutes to run the scan and then exit from container. Execute the following command to copy the report to the Docker host:
 ```
-
-To launch the GUI:
-```bash
-./zap.sh
+docker cp cont1:/zap/wrk/report.html /home/labuser/report.html
 ```
+Open the report.html in browser.
 
----
+<img width="1232" alt="image" src="https://github.com/user-attachments/assets/27a72de8-3564-4e27-9638-785f4e2ec137" />
 
-## Step 2: Run ZAP in Headless (CLI) Mode
 
-You can run a scan against a test site (e.g. [http://testphp.vulnweb.com](http://testphp.vulnweb.com)) without launching the GUI.
-
-Basic spider + active scan:
-```bash
-zap.sh -cmd -quickurl http://testphp.vulnweb.com -quickout zap-report.html
-```
-
-Explanation:
-- `-cmd`: run in CLI mode
-- `-quickurl`: target URL
-- `-quickout`: output HTML report
-
----
-
-## Step 3: Full Scan Example
-
-For a deeper scan, you can run the full scan automation script:
-
-```bash
-zap.sh -cmd -autorun /path/to/full-scan.yaml
-```
-
-You can generate the `full-scan.yaml` file from the ZAP GUI (File > New Automation Plan) or write one manually (see [ZAP Automation Framework](https://www.zaproxy.org/docs/automate/)).
-
----
-
-## 📄 Step 4: View the Report
-
-The generated report (`zap-report.html`) can be opened in a browser:
-```bash
-xdg-open zap-report.html
-```
-
-You’ll see:
-- Alerts categorized by risk level
-- URLs scanned
-- Request/response details
-
----
-
-## Cleanup
-
-If installed via Snap:
-```bash
-sudo snap remove zaproxy
-```
-
-If downloaded manually:
-```bash
-rm -rf ZAP_2.14.0*
-```
-
----
