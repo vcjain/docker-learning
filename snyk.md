@@ -69,6 +69,16 @@ You will see a detailed vulnerability report, e.g.:
   - from: openssl@1.0.2
 ```
 
+You can upload the results with:
+```
+snyk container monitor my-vulnerable-app
+
+```
+Go to https://app.snyk.io
+
+Navigate to Projects
+
+
 ---
 
 ## Cleanup (Optional)
