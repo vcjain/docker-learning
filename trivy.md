@@ -72,6 +72,11 @@ Total: 10 (UNKNOWN: 0, LOW: 2, MEDIUM: 5, HIGH: 2, CRITICAL: 1)
 
 ##  Cleanup (Optional)
 
+To clear cache
+```
+trivy clean --scan-cache
+```
+
 ```bash
 docker rmi my-vulnerable-app
 ```
