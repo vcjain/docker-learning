@@ -25,7 +25,7 @@ docker trust signer add --key <signername>.pub <signer name> <repo>
 
 > Example 
 ```
-docker trust signer add --key vcjain.pub vcjain vcjain/dct-test
+docker trust signer add --key vcjain.pub vcjain vcjain/dct
 ```
 
 Create a image, which we can test for signing using docker content trust
@@ -44,15 +44,15 @@ Enter below content and save the file - ESC --> :wq
 Create a Image of above docker file and run it.
 
 ```
-docker build -t vcjain/dct-test:unsigned .
-docker run vcjain/dct-test:unsigned
+docker build -t vcjain/dct:unsigned .
+docker run vcjain/dct:unsigned
 ```
 
 Enable the Docker Content Trust
 
 ```
 export DOCKER_CONTENT_TRUST=1
-docker run vcjain/dct-test:unsigned
+docker run vcjain/dct:unsigned
 
 Output : You will get error. With Docker Trust Content enable, docker will only pull and run a signed image
     docker: No valid trust data for unsigned.
@@ -60,9 +60,8 @@ Output : You will get error. With Docker Trust Content enable, docker will only 
 
 Create a new tag of the image as signed and push it.
 ```
-docker image tag vcjain/dct-test:unsigned vcjain/dct-test:signed
-docker push vcjain/dct-test:signed
-docker run vcjain/dct-test:signed
+docker image tag vcjain/dct:unsigned vcjain/dct:signed
+docker push vcjain/dct:signed
 ```
 
 Disable the Docker Content Trust
