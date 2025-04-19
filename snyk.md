@@ -38,6 +38,21 @@ Then authenticate via CLI:
 ```bash
 snyk auth
 ```
+---
+### Headless
+Log in to your Snyk account at https://app.snyk.io
+
+Go to Account Settings (top right → click your profile icon)
+
+Scroll to API Token section
+
+Click “Copy” to copy your token
+```
+export SNYK_TOKEN=your-api-token-here
+
+```
+
+
 
 This will open a browser for you to log in.
 
