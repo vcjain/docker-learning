@@ -47,32 +47,12 @@ This will open a browser for you to log in.
 
 Use an intentionally vulnerable image or build one yourself.
 
-### Option 1: Use Intentionally Vulnerable Image
+### Use Intentionally Vulnerable Image
 ```bash
 docker pull vulnerables/web-dvwa
 docker tag vulnerables/web-dvwa my-vulnerable-app
 ```
 
-### Option 2: Create Custom Vulnerable Dockerfile
-
-Create `Dockerfile`:
-```Dockerfile
-FROM node:10-slim
-
-RUN apt-get update && apt-get install -y curl
-
-WORKDIR /app
-COPY . .
-
-CMD ["node"]
-```
-
-Build image:
-```bash
-docker build -t my-vulnerable-app .
-```
-
----
 
 ## 🔎 Step 4: Scan Docker Image Using Snyk
 
