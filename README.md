@@ -6,7 +6,7 @@ We can enable the docker trust we need to set environment variable DOCKER_CONTEN
 
 Login into Docker Hub registry
 ```
-docker login
+docker login -u <username>
 ```
 
 Generate Keys used in docker content trust for signing images 
