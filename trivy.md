@@ -55,7 +55,7 @@ trivy image my-vulnerable-app
 
 Optional: Save results to file
 ```bash
-trivy image --format table --output trivy-report.json my-vulnerable-app
+trivy image --format table my-vulnerable-app
 ```
 
 ---
